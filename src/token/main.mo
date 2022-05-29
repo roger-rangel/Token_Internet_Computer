@@ -1,6 +1,7 @@
 import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
 
+// canister Token
 actor Token {
 
     var owner : Principal = Principal.fromText("agolx-rr7bb-ntvfu-e36kt-djlhp-yzfq5-uz5nw-wzuvx-gtqn6-26odg-eqe");
