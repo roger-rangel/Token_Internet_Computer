@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import { toke } from "../../../declarations/token"
-import { token } from "../../../declarations/token/index";
+import { token } from "../../../declarations/token"
 
 function Faucet() {
 

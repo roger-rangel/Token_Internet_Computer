@@ -6,19 +6,15 @@ function Balance() {
 
   const [inputValue, setInput] = useState("");
   const [balanceResult, setBalance] = useState("");
-  const [symbol, setSymbol] = useState("");
+  const [cryptoSymbol, setSymbol] = useState("");
   const [isHidden, setHidden] = useState(true);
   
   async function handleClick() {
-    console.log("Balance Button Clicked");
-    console.log(inputValue);
+    // console.log(inputValue);
     const principal = Principal.fromText(inputValue);
     const balance = await token.balanceOf(principal);
-    const symbol = await token.getSymbol();
-    
-
-    setSymbol(symbol.toLocaleString());
     setBalance(balance.toLocaleString());
+    setSymbol(await token.getSymbol());
     setHidden(false);
   }
 
@@ -32,7 +28,7 @@ function Balance() {
           type="text"
           placeholder="Enter a Principal ID"
           value={inputValue}
-          onChange={e => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value)}
         />
       </p>
       <p className="trade-buttons">
@@ -43,7 +39,7 @@ function Balance() {
           Check Balance
         </button>
       </p>
-      <p hidden={isHidden}>This account has a balance of {balanceResult} {symbol}.</p>
+      <p hidden={isHidden}>This account has a balance of {balanceResult} {cryptoSymbol}.</p>
     </div>
   );
 }

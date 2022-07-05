@@ -3,34 +3,33 @@ import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
 
-// canister Token
 actor Token {
 
-    var owner : Principal = Principal.fromText("agolx-rr7bb-ntvfu-e36kt-djlhp-yzfq5-uz5nw-wzuvx-gtqn6-26odg-eqe");
-    var totalSupply : Nat = 1000000000;
-    var symbol : Text = "SEGEN";
+  let owner : Principal = Principal.fromText("agolx-rr7bb-ntvfu-e36kt-djlhp-yzfq5-uz5nw-wzuvx-gtqn6-26odg-eqe");
+  let totalSupply : Nat = 1000000000;
+  let symbol : Text = "DANG";
 
-    private stable var balanceEntries : [(Principal, Nat)] = [];
-    private var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
-    if (balances.size() < 1) {
+  private stable var balanceEntries : [(Principal, Nat)] = [];
+  private var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
+  if (balances.size() < 1) {
       balances.put(owner, totalSupply);
     };
+    
+  public query func balanceOf(who: Principal) : async Nat {
 
-    public query func balanceOf(who: Principal) : async Nat {
-
-        let balance : Nat  = switch (balances.get(who)) {
-            case null 0;
-            case (?result) result;
-        };
-
-        return balance;
+    let balance : Nat = switch (balances.get(who)) {
+      case null 0;
+      case (?result) result;
     };
 
-    public query func getSymbol() : async Text {
-        return symbol;
-    };
+    return balance;
+  };
 
-    public shared(msg) func payOut() : async Text {
+  public query func getSymbol() : async Text {
+    return symbol;
+  };
+
+  public shared(msg) func payOut() : async Text {
     Debug.print(debug_show(msg.caller));
     if (balances.get(msg.caller) == null) {
       let amount = 100;
@@ -68,4 +67,6 @@ actor Token {
       balances.put(owner, totalSupply);
     };
   };
+
 };
+
